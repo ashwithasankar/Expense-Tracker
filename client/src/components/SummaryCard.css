@@ -1,0 +1,42 @@
+.summary-card{
+    display:flex;
+    align-items:center;
+    gap:18px;
+
+    background:white;
+    padding:20px;
+
+    border-radius:18px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    transition:.3s;
+}
+
+.summary-card:hover{
+    transform:translateY(-5px);
+}
+
+.summary-icon{
+    width:65px;
+    height:65px;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:white;
+    font-size:28px;
+}
+
+.summary-card h4{
+    margin:0;
+    color:#777;
+}
+
+.summary-card h2{
+    margin-top:8px;
+    color:#222;
+}
