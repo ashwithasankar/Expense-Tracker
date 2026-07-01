@@ -64,16 +64,18 @@ useEffect(() => {
 
 };
 
-  useEffect(() => {
+useEffect(() => {
 
-    if (!userId) {
-      navigate("/");
-    } else {
-      fetchExpenses();
-fetchBudget();
-    }
+  if (!userId) {
+    navigate("/");
+    return;
+  }
 
-  }, []);
+  fetchExpenses();
+  fetchBudget();
+
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [userId]);
 
   // HANDLE INPUT
   const handleChange = (e) => {
