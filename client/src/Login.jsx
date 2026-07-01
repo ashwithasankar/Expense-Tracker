@@ -11,6 +11,8 @@ function Login() {
     password: ""
   });
 
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -24,29 +26,43 @@ function Login() {
 
     e.preventDefault();
 
-    const res = await API.post("/login", form);
+    setLoading(true);
 
-    if (res.data === "Login successful") {
+    try {
 
-      toast.success("🎉 Login Successful!");
+      const res = await API.post("/login", form);
 
-      localStorage.setItem("userId", form.email);
+      if (res.data === "Login successful") {
 
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 1500);
+        toast.success("🎉 Login Successful!");
 
-    } else if (res.data === "Wrong password") {
+        localStorage.setItem("userId", form.email);
 
-      toast.error("❌ Wrong Password");
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 1500);
 
-    } else if (res.data === "User not found") {
+      } else if (res.data === "Wrong password") {
 
-      toast.error("❌ User Not Found");
+        toast.error("❌ Wrong Password");
 
-    } else {
+      } else if (res.data === "User not found") {
 
-      toast.warning(res.data);
+        toast.error("❌ User Not Found");
+
+      } else {
+
+        toast.warning(res.data);
+
+      }
+
+    } catch (err) {
+
+      toast.error("❌ Server not responding. Please try again.");
+
+    } finally {
+
+      setLoading(false);
 
     }
 
@@ -88,8 +104,11 @@ function Login() {
             onChange={handleChange}
           />
 
-          <button className="auth-btn">
-            Sign In
+          <button
+            className="auth-btn"
+            disabled={loading}
+          >
+            {loading ? "⏳ Connecting to Server..." : "Sign In"}
           </button>
 
         </form>
